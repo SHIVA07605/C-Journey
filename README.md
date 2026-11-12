@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # C++ and DSA Learning
 
 A collection of standalone C++ exercises and notes, organized by topic as I
@@ -31,3 +32,7 @@ g++ -std=c++17 cpp-fundamentals/hello-world.cpp -o hello-world
 
 Run the resulting program (`./hello-world` on Linux/macOS, or
 `.\hello-world.exe` on Windows).
+=======
+# C++-Journey
+My C++ learning journey: practice programs and notes on C++ basics, OOP, arrays, algorithms, and data structures. Some exercises are still in progress.
+>>>>>>> 91af8b3535f1a94c9b57837b599cd2d1f1c3b79e
