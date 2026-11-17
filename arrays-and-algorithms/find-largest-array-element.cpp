@@ -1,21 +1,25 @@
-// finding the larget number in the arrray
+#include <algorithm>
 #include <iostream>
-using namespace std;
-int main(){
-    int n;
-    cout<<"Enter the size of the array: ";
-    cin>>n;
-    int arr[n];
-    cout<<"Enter the elements of the array: ";
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
+#include <vector>
+
+int main() {
+    int size;
+    std::cout << "Enter the size of the array: ";
+    if (!(std::cin >> size) || size <= 0) {
+        std::cerr << "The size must be a positive integer.\n";
+        return 1;
     }
-    int largest=arr[0];
-    for(int i=1;i<n;i++){
-        if(arr[i]>largest){
-            largest=arr[i];
+
+    std::vector<int> values(size);
+    std::cout << "Enter the elements: ";
+    for (int& value : values) {
+        if (!(std::cin >> value)) {
+            std::cerr << "Invalid element.\n";
+            return 1;
         }
     }
-    cout<<"The largest number in the array is: "<<largest<<endl;
+
+    std::cout << "Largest element: "
+              << *std::max_element(values.begin(), values.end()) << '\n';
     return 0;
 }

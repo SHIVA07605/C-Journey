@@ -1,105 +1,43 @@
-// //Building a Binary search tree
-// #include <iostream>
-// #include<vector>
-// using namespace std;
-// class Node{
-// public:
-//     int data;
-//     Node* left;
-//     Node* right;
-//     Node(int val){
-//         data = val;
-//         left = NULL;
-//         right = NULL;
-//     }
-// };
-// Node* insertTree(Node* root, int value){
-// //base case
-//     if(root == NULL){
-//         return new Node(value);
-//     }
-//     //small problem
-//     if(value < root->data){
-//         root->left = insertTree(root->left, value);
-//     }
-//     else{
-//         root->right = insertTree(root->right, value);
-//     }
-//     return root;
-// }
-// Node* buildTree(vector<int> arr){
-//     Node* root = NULL;
-//     for(int i=0;i<arr.size();i++){
-//         root = insertTree(root, arr[i]);
-//     }
-//     return root;
-// }
-// void inOrder(Node* root){
-//     if(root == NULL){
-//         return;
-//     }
-//     inOrder(root->left);
-//     cout<<root->data<<" ";
-//     inOrder(root->right);
-// }
-// int main(){
-//     vector<int> arr = {3,2,1,5,6,4};
-//     Node* root = buildTree(arr);
-//     cout<<"Binary search tree: ";
-//     inOrder(root);
-//     cout<<endl;
-// }
+#include <iostream>
+#include <memory>
+#include <vector>
 
+struct Node {
+    explicit Node(int value) : data(value) {}
 
-// //Building a Binary search tree
-// #include <iostream>
-// #include<vector>
-// using namespace std;
-// class Node{
-// public:
-//     int data;
-//     Node* left;
-//     Node* right;
-//     Node(int val){
-//         data = val;
-//         left = NULL;
-//         right = NULL;
-//     }
-// };
-// Node* insertTree(Node* root, int value){
-// //base case
-//     if(root == NULL){
-//         return new Node(value);
-//     }
-//     //small problem
-//     if(value < root->data){
-//         root->left = insertTree(root->left, value);
-//     }
-//     else{
-//         root->right = insertTree(root->right, value);
-//     }
-//     return root;
-// }
-// Node* buildTree(vector<int> arr){
-//     Node* root = NULL;
-//     for(int i=0;i<arr.size();i++){
-//         root = insertTree(root, arr[i]);
-//     }
-//     return root;
-// }
-// void inOrder(Node* root){
-//     if(root == NULL){
-//         return;
-//     }
-//     inOrder(root->left);
-//     cout<<root->data<<" ";
-//     inOrder(root->right);
-// }
-// int main(){
-//     vector<int> arr = {3,2,1,5,6,4};
-//     Node* root = buildTree(arr);
-//     cout<<"Binary search tree: ";
-//     inOrder(root);
-//     cout<<endl;
-// }
-voi
+    int data;
+    std::unique_ptr<Node> left;
+    std::unique_ptr<Node> right;
+};
+
+void insert(std::unique_ptr<Node>& root, int value) {
+    if (!root) {
+        root = std::make_unique<Node>(value);
+    } else if (value < root->data) {
+        insert(root->left, value);
+    } else if (value > root->data) {
+        insert(root->right, value);
+    }
+}
+
+void printInOrder(const Node* root) {
+    if (root == nullptr) {
+        return;
+    }
+    printInOrder(root->left.get());
+    std::cout << root->data << ' ';
+    printInOrder(root->right.get());
+}
+
+int main() {
+    const std::vector<int> values{3, 2, 1, 5, 6, 4};
+    std::unique_ptr<Node> root;
+    for (int value : values) {
+        insert(root, value);
+    }
+
+    std::cout << "Binary search tree (in-order): ";
+    printInOrder(root.get());
+    std::cout << '\n';
+    return 0;
+}

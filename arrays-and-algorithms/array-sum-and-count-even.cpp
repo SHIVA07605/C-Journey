@@ -1,26 +1,33 @@
-// find the  sum of all element  in array user input and count even number in the array
 #include <iostream>
-using namespace std;
-int main(){
-    int n;
-    cout<<"Enter the number of elements: ";
-    cin>>n;
-    int arr[n];
-    cout<<"Enter the elements of the array: ";
-    for(int i=0; i<n; i++){
-        cin>>arr[i];
+#include <vector>
+
+int main() {
+    int size;
+    std::cout << "Enter the number of elements: ";
+    if (!(std::cin >> size) || size <= 0) {
+        std::cerr << "The size must be a positive integer.\n";
+        return 1;
     }
-    int sum=0;
-    for(int i=0; i<n; i++){
-        sum = sum + arr[i];
-    }
-    cout<<"The sum is: "<<sum<<endl;
-    int count=0;
-    for(int i=0; i<n; i++){
-        if(arr[i]%2==0){
-            count++;
+
+    std::vector<int> values(size);
+    std::cout << "Enter the elements: ";
+    for (int& value : values) {
+        if (!(std::cin >> value)) {
+            std::cerr << "Invalid element.\n";
+            return 1;
         }
     }
-    cout<<"The number of even elements is: "<<count<<endl;
 
+    long long sum = 0;
+    int evenCount = 0;
+    for (int value : values) {
+        sum += value;
+        if (value % 2 == 0) {
+            ++evenCount;
+        }
+    }
+
+    std::cout << "Sum: " << sum << '\n'
+              << "Even elements: " << evenCount << '\n';
+    return 0;
 }

@@ -1,40 +1,28 @@
-// taking the two array and we have to find the smalled number and then merge the two array in the sorted way and then print the merged array
 #include <iostream>
-using namespace std;
-int main(){
-    int a[]={1,4,7};
-    int b[]={2,3,8};
-    int n=3,m=3;
-    int c[n+m];
-    int i=0,j=0,k=0;
-    while(i<n && j<m){
-        if(a[i]<b[j]){
-            c[k]=a[i];
-            i++;
+#include <vector>
+
+int main() {
+    const std::vector<int> first{1, 4, 7};
+    const std::vector<int> second{2, 3, 8};
+    std::vector<int> merged;
+    merged.reserve(first.size() + second.size());
+
+    std::size_t i = 0;
+    std::size_t j = 0;
+    while (i < first.size() && j < second.size()) {
+        if (first[i] <= second[j]) {
+            merged.push_back(first[i++]);
+        } else {
+            merged.push_back(second[j++]);
         }
-        else{
-            c[k]=b[j];
-            j++;
-        }
-        k++;
     }
-        // this is used for the remaining elements of the array if any of the array is not completely traversed
-        while(i<n){
-            c[k]=a[i];
-            i++;
-            k++;
-        }
-        // this is used for the remaining elements of the array if any of the array is not completely traversed means if the first array is completely traversed and the second array is not completely traversed then this loop will be executed
-        while(j<m){
-            c[k]=b[j];
-            j++;
-            k++;
-        }
-        // Print the merged array
-    cout << "Merged array: ";
-    for(int l=0;l<n+m;l++){
-        cout << c[l] << " ";
+    merged.insert(merged.end(), first.begin() + i, first.end());
+    merged.insert(merged.end(), second.begin() + j, second.end());
+
+    std::cout << "Merged array: ";
+    for (int value : merged) {
+        std::cout << value << ' ';
     }
-   
+    std::cout << '\n';
     return 0;
 }

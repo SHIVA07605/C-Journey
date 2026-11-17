@@ -1,25 +1,40 @@
-// remove deumplicate from the sorted and array and print the sorted array
 #include <iostream>
-using namespace std;
-int main(){
-    int n;
-    cout<<"Enter the number of elements: "; // number of elements from the user
-    cin>>n;
-    int arr[n];
-    cout<<"Enter the elements of the array: "; // number of elements from the user in the array
-    for(int i=0; i<n; i++){
-        cin>>arr[i];
+#include <vector>
+
+int main() {
+    int size;
+    std::cout << "Enter the number of elements in the sorted array: ";
+    if (!(std::cin >> size) || size < 0) {
+        std::cerr << "The size must be a non-negative integer.\n";
+        return 1;
     }
-    int j = 0;
-    for(int i=0; i<n-1; i++){ // used bubble sort to sort the array in ascending order
-        if(arr[i] != arr[i+1]){ // here it is comparing with the value of the next element and if it is not equal then it will add the value to the new array
-            arr[j++] = arr[i];
+
+    std::vector<int> values(size);
+    std::cout << "Enter the elements in sorted order: ";
+    for (int& value : values) {
+        if (!(std::cin >> value)) {
+            std::cerr << "Invalid element.\n";
+            return 1;
         }
     }
-    arr[j++] = arr[n-1];   // add the last element to the new array
-    cout<<"The sorted array after removing duplicates is: ";
-    for(int i=0; i<j; i++){
-        cout<<arr[i]<<" "; // 
+    for (std::size_t i = 1; i < values.size(); ++i) {
+        if (values[i - 1] > values[i]) {
+            std::cerr << "The input array must be sorted.\n";
+            return 1;
+        }
     }
+
+    std::vector<int> uniqueValues;
+    for (int value : values) {
+        if (uniqueValues.empty() || uniqueValues.back() != value) {
+            uniqueValues.push_back(value);
+        }
+    }
+
+    std::cout << "Array without duplicates: ";
+    for (int value : uniqueValues) {
+        std::cout << value << ' ';
+    }
+    std::cout << '\n';
     return 0;
 }

@@ -1,26 +1,33 @@
-// given a array of roatate into the right using the swap method and take the input from the user and print the rotated array
 #include <iostream>
-using namespace std;
-int main(){
-    int n;
-    cout<<"Enter the number of elements: ";//taking the number of elements from the user
-    cin>>n;
-    int arr[n];
-    cout<<"Enter the elements of the array: ";// taking input from the user
-    for(int i=0; i<n; i++){
-        cin>>arr[i];
+#include <vector>
+
+int main() {
+    int size;
+    std::cout << "Enter the number of elements: ";
+    if (!(std::cin >> size) || size <= 0) {
+        std::cerr << "The size must be a positive integer.\n";
+        return 1;
     }
-    int temp = arr[n-1]; // store the last element in a temporary variable
-    for(int i=n-1; i>0; i--){
-        arr[i] = arr[i-1];
+
+    std::vector<int> values(size);
+    std::cout << "Enter the elements: ";
+    for (int& value : values) {
+        if (!(std::cin >> value)) {
+            std::cerr << "Invalid element.\n";
+            return 1;
+        }
     }
-    arr[0] = temp;
-    cout<<"The rotated array is: ";
-    for(int i=0; i<n; i++){
-        cout<<arr[i]<<" ";
+
+    const int last = values.back();
+    for (std::size_t i = values.size() - 1; i > 0; --i) {
+        values[i] = values[i - 1];
     }
+    values.front() = last;
+
+    std::cout << "Rotated array: ";
+    for (int value : values) {
+        std::cout << value << ' ';
+    }
+    std::cout << '\n';
     return 0;
 }
-// what is the time complexity of this code?
-// The time complexity of the given code is O(n), where n is the number of elements in the array.
-// the space complexity of this code is O(1) because we are using a constant amount of extra space (the variable temp) regardless of the size of the input array.

@@ -1,60 +1,47 @@
 #include <iostream>
 #include <vector>
-using namespace std;
-void merge(vector<int> &arr,int sp,int mid,int ep){
-    vector<int> temp;
-    int i=sp;
-    int j=mid+1;
-    while(i<=mid && j<=ep){
-        if(arr[i]<=arr[j]){
-            temp.push_back(arr[i]);
-            i++;
+
+void merge(std::vector<int>& values, int first, int middle, int last) {
+    std::vector<int> merged;
+    merged.reserve(static_cast<std::size_t>(last - first + 1));
+    int left = first;
+    int right = middle + 1;
+
+    while (left <= middle && right <= last) {
+        if (values[left] <= values[right]) {
+            merged.push_back(values[left++]);
+        } else {
+            merged.push_back(values[right++]);
         }
-        else{
-            temp.push_back(arr[j]);
-            j++;
-        }
     }
-    while(i<=mid){
-        temp.push_back(arr[i]);
-        i++;
+    while (left <= middle) {
+        merged.push_back(values[left++]);
     }
-    while(j<=ep){
-        temp.push_back(arr[j]);
-        j++;
+    while (right <= last) {
+        merged.push_back(values[right++]);
     }
-    for(int k=sp;k<=ep;k++){
-        arr[k]=temp[k-sp];
+    for (std::size_t i = 0; i < merged.size(); ++i) {
+        values[first + static_cast<int>(i)] = merged[i];
     }
 }
 
-void mergeSort(vector<int> arr, int sp,int ep){
-    int i=sp;
-    int j=mid+1;
-    vector<int> temp;
-    while(i<=mid && j<=ep){
-        if(arr[i]<=arr[j]){
-            temp.push_back(arr[i]);
-            i++;
-        }
-        else{
-            temp.push_back(arr[j]);
-            j++;
-        }
-    }
-    if(sp>=ep){
-        int mid=sp+(ep-sp)/2;
-        mergeSort(arr,sp,mid);
-        mergeSort(arr,mid+1,ep);
-        merge(arr,sp,mid,ep);
+void mergeSort(std::vector<int>& values, int first, int last) {
+    if (first >= last) {
         return;
     }
+
+    const int middle = first + (last - first) / 2;
+    mergeSort(values, first, middle);
+    mergeSort(values, middle + 1, last);
+    merge(values, first, middle, last);
 }
-int main(){
-    vector<int> arr={1,5,3,2,6,4};
-    mergeSort(arr,0,arr.size()-1);
-    for(int i=0;i<arr.size();i++){
-        cout<<arr[i]<<" ";
+
+int main() {
+    std::vector<int> values{1, 5, 3, 2, 6, 4};
+    mergeSort(values, 0, static_cast<int>(values.size()) - 1);
+    for (int value : values) {
+        std::cout << value << ' ';
     }
+    std::cout << '\n';
     return 0;
 }

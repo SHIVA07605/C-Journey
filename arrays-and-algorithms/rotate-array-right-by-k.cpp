@@ -1,31 +1,39 @@
+#include <algorithm>
 #include <iostream>
-using namespace std;
-int main(){
-    int n;
-    cout<<"Enter the number of elements: ";
-    cin>>n;
-    int arr[n];
-    cout<<"Enter the elements of the array: ";
-    for(int i=0; i<n; i++){
-        cin>>arr[i];
+#include <vector>
+
+int main() {
+    int size;
+    std::cout << "Enter the number of elements: ";
+    if (!(std::cin >> size) || size <= 0) {
+        std::cerr << "The size must be a positive integer.\n";
+        return 1;
     }
-    int k;
-    cout<<"Enter the number of rotations: ";
-    cin>>k;
-    k = k % n; // to handle cases where k is greater than n
-    int temp[k];
-    for(int i=0; i<k; i++){
-        temp[i] = arr[n-k+i];
+
+    std::vector<int> values(size);
+    std::cout << "Enter the elements: ";
+    for (int& value : values) {
+        if (!(std::cin >> value)) {
+            std::cerr << "Invalid element.\n";
+            return 1;
+        }
     }
-    for(int i=n-1; i>=k; i--){ // to hande i is greater than 
-        arr[i] = arr[i-k];
+
+    long long rotations;
+    std::cout << "Enter the number of right rotations: ";
+    if (!(std::cin >> rotations)) {
+        std::cerr << "Invalid rotation count.\n";
+        return 1;
     }
-    for(int i=0; i<k; i++){
-        arr[i] = temp[i];
+
+    const long long normalized =
+        ((rotations % size) + size) % size;
+    std::rotate(values.begin(), values.end() - normalized, values.end());
+
+    std::cout << "Rotated array: ";
+    for (int value : values) {
+        std::cout << value << ' ';
     }
-    cout<<"The rotated array is: ";
-    for(int i=0; i<n; i++){
-        cout<<arr[i]<<" ";
-    }
+    std::cout << '\n';
     return 0;
 }

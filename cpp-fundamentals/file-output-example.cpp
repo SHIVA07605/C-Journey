@@ -10,5 +10,11 @@ int main() {
 
     output << "Name: Example Student\n"
            << "Student ID: 12345\n";
+    if (!output) {
+        std::cerr << "Could not write to example.txt.\n";
+        return 1;
+    }
+
+    std::cout << "Wrote student details to example.txt.\n";
     return 0;
 }

@@ -1,91 +1,74 @@
-// #include <iostream>
-// using namespace std;
+#include <iostream>
+#include <memory>
+#include <vector>
 
+struct Node {
+    explicit Node(int value) : data(value) {}
 
-// class Node{
-// public:
-//     int data;
-//     Node* left;
-//     Node* right;
-//     Node(int val){
-//         data = val;
-//         left = NULL;
-//         right = NULL;
-//     }
-// };
-// static int idx = -1;
-// Node* buildTree(int arr[]){
-//     idx++;
-//     if(arr[idx]==-1){
-//         return NULL;
-//     }
-//     Node* newNode = new Node(arr[idx]);
-//     newNode->left = buildTree(arr);
-//     newNode->right = buildTree(arr);
-//     return newNode;
-// }
-// int main(){
-//     int arr[] = {1, 2, -1, -1, 3, 4, -1, -1, 5, -1, -1};
-//     Node* root = buildTree(arr);
-//     cout << "Root: " << root->data << endl;
-//     cout << "Left Child: " << root->left->data << endl;
-//     cout << "Right Child: " << root->right->data << endl;
-//     cout << "Left Child of Right Child: " << root->right->left->data << endl;
-// #include <iostream>
-// using namespace std;
-// class Node{
-// public:
-//     int data;
-//     Node* left;
-//     Node* right;
-//     Node(int val){
-//         data = val;
-//         left = NULL;
-//         right = NULL;
-//     }
-// };
-// static int idx = -1;
-// Node* buildTree(int arr[]){
-//     idx++;
-//     if(arr[idx]==-1){
-//         return NULL;
-//     }
-//     Node* newNode = new Node(arr[idx]);
-//     newNode->left = buildTree(arr);
-//     newNode->right = buildTree(arr);
-//     return newNode;
-// }
-// void preOrder(Node* root){
-//     if(root == NULL){
-//         return;
-//     }
-//     cout<<root->data<<" ";
-//     preOrder(root->left);
-//     preOrder(root->right);
-// }
-// void inOrder(Node* root){
-//     if(root == NULL){
-//         return;
-//     }
-//     inOrder(root->left);
-//     cout<<root->data<<" ";
-//     inOrder(root->right);
-// }
-// void postOrder(Node* root){
-//     if(root == NULL){
-//         return;
-//     }
-//     postOrder(root->left);
-//     postOrder(root->right);
-//     cout<<root->data<<" ";
-// }
-// int main(){
-//     int arr[] = {1, 2, -1, -1, 3, 4, -1, -1, 5, -1, -1};
-//     Node* root = buildTree(arr);
-//     preOrder(root);
-//     cout << endl;
-//     inOrder(root);
-//     cout << endl;
-//     postOrder(root);
-//     cout << endl;
-// }
+    int data;
+    std::unique_ptr<Node> left;
+    std::unique_ptr<Node> right;
+};
+
+std::unique_ptr<Node> buildTree(const std::vector<int>& values,
+                                std::size_t& index) {
+    if (index >= values.size()) {
+        return nullptr;
+    }
+
+    const int value = values[index++];
+    if (value == -1) {
+        return nullptr;
+    }
+
+    auto node = std::make_unique<Node>(value);
+    node->left = buildTree(values, index);
+    node->right = buildTree(values, index);
+    return node;
+}
+
+void printPreOrder(const Node* root) {
+    if (root == nullptr) {
+        return;
+    }
+    std::cout << root->data << ' ';
+    printPreOrder(root->left.get());
+    printPreOrder(root->right.get());
+}
+
+void printInOrder(const Node* root) {
+    if (root == nullptr) {
+        return;
+    }
+    printInOrder(root->left.get());
+    std::cout << root->data << ' ';
+    printInOrder(root->right.get());
+}
+
+void printPostOrder(const Node* root) {
+    if (root == nullptr) {
+        return;
+    }
+    printPostOrder(root->left.get());
+    printPostOrder(root->right.get());
+    std::cout << root->data << ' ';
+}
+
+int main() {
+    const std::vector<int> encoded{1, 2, -1, -1, 3, 4, -1, -1, 5, -1, -1};
+    std::size_t index = 0;
+    const std::unique_ptr<Node> root = buildTree(encoded, index);
+    if (index != encoded.size()) {
+        std::cerr << "The encoded tree contains unused values.\n";
+        return 1;
+    }
+
+    std::cout << "Pre-order: ";
+    printPreOrder(root.get());
+    std::cout << "\nIn-order: ";
+    printInOrder(root.get());
+    std::cout << "\nPost-order: ";
+    printPostOrder(root.get());
+    std::cout << '\n';
+    return 0;
+}

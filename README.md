@@ -1,38 +1,27 @@
-<<<<<<< HEAD
 # C++ and DSA Learning
 
-A collection of standalone C++ exercises and notes, organized by topic as I
-learn C++ fundamentals, object-oriented programming, and data structures and
-algorithms.
+A collection of standalone C++ programs for practicing C++ fundamentals,
+object-oriented programming, arrays, algorithms, and data structures.
 
-## Topics
+## Project layout
 
-- **C++ fundamentals** — basic input/output, functions, parameter passing,
-  file output, and time/space complexity.
-- **Object-oriented programming** — constructors and introductory class
+- `cpp-fundamentals/` — input/output, functions, parameter passing, and complexity.
+- `object-oriented-programming/` — constructors and introductory classes.
+- `arrays-and-algorithms/` — array operations, sorting, merging, and rotation.
+- `data-structures-and-trees/` — binary trees, linked lists, stacks, and queues.
+- `incomplete-exercises/` — completed practice examples that began as unfinished
   exercises.
-- **Arrays and algorithms** — merging sorted arrays, rotation, sorting,
-  searching-related practice, and array problems.
-- **Data structures and trees** — notes and practice on linked lists, stacks,
-  queues, binary trees, and binary search trees.
-- **Incomplete exercises** — drafts and empty files kept as a record of work
-  still in progress.
+- Root-level `.c++` files — additional algorithm and problem-solving examples.
 
-Each `.cpp` file is a separate exercise. Some files are notes or unfinished
-drafts and may not compile yet.
-
-## Compile and run an exercise
-
-With a C++ compiler such as g++, compile one source file at a time from the
-project root:
+Each source file is a separate program with its own `main` function. Compile one
+file at a time from the project root using a C++17 compiler:
 
 ```sh
 g++ -std=c++17 cpp-fundamentals/hello-world.cpp -o hello-world
 ```
 
-Run the resulting program (`./hello-world` on Linux/macOS, or
-`.\hello-world.exe` on Windows).
-=======
-# C++-Journey
-My C++ learning journey: practice programs and notes on C++ basics, OOP, arrays, algorithms, and data structures. Some exercises are still in progress.
->>>>>>> 91af8b3535f1a94c9b57837b599cd2d1f1c3b79e
+On Windows, run the resulting executable with:
+
+```powershell
+.\hello-world.exe
+```

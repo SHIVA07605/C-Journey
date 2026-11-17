@@ -1,66 +1,66 @@
-// compare and writen alogratighms in the steps and compare two array and then merge them using  and the array will be user defined 
-
-// Lecture 4 
-// step 1: Define two arrays of the same size and initialize them with values.
-// step 2: Create a function that takes two arrays and their sizes as parameters.
-// step 3: Inside the function, create a new array to hold the merged values.
-// step 4: Use two pointers to traverse both arrays and compare their elements.
-// step 5: If the element in the first array is smaller, add it to the merged array and move the pointer of the first array forward.
-// step 6: If the element in the second array is smaller, add it to the merged
-//     array and move the pointer of the second array forward.
 #include <iostream>
-void mergeArrays(int arr1[], int size1, int arr2[], int size2, int merged[]) {
-    int i = 0, j = 0, k = 0;
+#include <vector>
 
-    // Traverse both arrays and compare their elements
-    while (i < size1 && j < size2) {
-        if (arr1[i] < arr2[j]) {
-            merged[k++] = arr1[i++];
-        } else {
-            merged[k++] = arr2[j++];
+std::vector<int> readSortedArray(int size) {
+    std::vector<int> values(size);
+    for (int& value : values) {
+        if (!(std::cin >> value)) {
+            return {};
         }
     }
-
-    // Copy remaining elements of arr1, if any
-    while (i < size1) {
-        merged[k++] = arr1[i++];
+    for (std::size_t i = 1; i < values.size(); ++i) {
+        if (values[i - 1] > values[i]) {
+            return {};
+        }
     }
-
-    // Copy remaining elements of arr2, if any
-    while (j < size2) {
-        merged[k++] = arr2[j++];
-    }
+    return values;
 }
 
-int main(){
-    int size1, size2;
-
-    // Get sizes of the arrays from the user
-    std::cout << "Enter size of first array: ";
-    std::cin >> size1;
-    int arr1[size1];
-    std::cout << "Enter elements of first array: ";
-    for (int i = 0; i < size1; i++) {
-        std::cin >> arr1[i];
+int main() {
+    int firstSize;
+    int secondSize;
+    std::cout << "Enter the size of the first sorted array: ";
+    if (!(std::cin >> firstSize) || firstSize < 0) {
+        std::cerr << "The size must be a non-negative integer.\n";
+        return 1;
+    }
+    std::cout << "Enter its elements in sorted order: ";
+    const std::vector<int> first = readSortedArray(firstSize);
+    if (first.size() != static_cast<std::size_t>(firstSize)) {
+        std::cerr << "Invalid or unsorted first array.\n";
+        return 1;
     }
 
-    std::cout << "Enter size of second array: ";
-    std::cin >> size2;
-    int arr2[size2];
-    std::cout << "Enter elements of second array: ";
-    for (int i = 0; i < size2; i++) {
-        std::cin >> arr2[i];
+    std::cout << "Enter the size of the second sorted array: ";
+    if (!(std::cin >> secondSize) || secondSize < 0) {
+        std::cerr << "The size must be a non-negative integer.\n";
+        return 1;
+    }
+    std::cout << "Enter its elements in sorted order: ";
+    const std::vector<int> second = readSortedArray(secondSize);
+    if (second.size() != static_cast<std::size_t>(secondSize)) {
+        std::cerr << "Invalid or unsorted second array.\n";
+        return 1;
     }
 
-    int merged[size1 + size2];
-    mergeArrays(arr1, size1, arr2, size2, merged);
+    std::vector<int> merged;
+    merged.reserve(first.size() + second.size());
+    std::size_t i = 0;
+    std::size_t j = 0;
+    while (i < first.size() && j < second.size()) {
+        if (first[i] <= second[j]) {
+            merged.push_back(first[i++]);
+        } else {
+            merged.push_back(second[j++]);
+        }
+    }
+    merged.insert(merged.end(), first.begin() + i, first.end());
+    merged.insert(merged.end(), second.begin() + j, second.end());
 
-    // Display merged array
     std::cout << "Merged array: ";
-    for (int i = 0; i < size1 + size2; i++) {
-        std::cout << merged[i] << " ";
+    for (int value : merged) {
+        std::cout << value << ' ';
     }
-    std::cout << std::endl;
-
+    std::cout << '\n';
     return 0;
 }

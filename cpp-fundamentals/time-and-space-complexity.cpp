@@ -1,16 +1,17 @@
-// what is compexity?
-// Complexity in computer science refers to the measure of the amount of resources (such as time and space) required by an algorithm to solve a problem as a function of the size of the input. It helps in analyzing the efficiency of algorithms and understanding how they scale with larger inputs. There are two main types of complexity:
-// 1. Time Complexity: It measures the amount of time an algorithm takes to complete as a function of the size of the input. It is often expressed using Big O notation (e.g., O(n), O(log n), O(n^2)) to describe the upper bound of the running time.
-// 2. Space Complexity: It measures the amount of memory an algorithm uses as a function of the size of the input. Like time complexity, it is also expressed using Big O notation to describe the upper bound of memory usage.
-// 3. trade of means that if we want to reduce the time complexity of an algorithm, we may have to use more space (memory), and vice versa. For example, using a hash table can reduce the time complexity of searching for an element from O(n) to O(1), but it requires additional space to store the hash table.
-//4.asomptotic Notation: Asymptotic notation is a mathematical notation used to describe the behavior of functions as the input size approaches infinity. It provides a way to express the growth rate of an algorithm's time or space complexity. The most commonly used asymptotic notations are:
-// - Big O Notation (O): It describes the upper bound of an algorithm's growth rate. It provides a worst-case scenario for the algorithm's performance. For example, if an algorithm has a time complexity of O(n), it means that the running time will not exceed a constant multiple of n for large input sizes.
-// - Omega Notation (Ω): It describes the lower bound of an algorithm's growth rate. It provides a best-case scenario for the algorithm's performance. For example, if an algorithm has a time complexity of Ω(n), it means that the running time will be at least a constant multiple of n for large input sizes.
-// - Theta Notation (Θ): It describes the tight bound of an algorithm's growth rate. It provides both an upper and lower bound for the algorithm's performance. For example, if an algorithm has a time complexity of Θ(n), it means that the running time is bounded both above and below by a constant multiple of n for large input sizes.
-//what is complextiy analysis?
-// Complexity analysis is the process of evaluating and determining the efficiency of an algorithm in terms of its time and space requirements. It involves analyzing how the algorithm's performance changes as the size of the input data increases. The goal of complexity analysis is to provide insights into the scalability and efficiency of algorithms, allowing developers to make informed decisions about which algorithms to use for specific problems.
-// why is it used? 
-// Complexity analysis is used to compare different algorithms, predict their performance on larger inputs, and optimize code for better efficiency. It helps developers understand the trade-offs between time and space complexity, enabling them to choose the most appropriate algorithm for a given problem.
-// how express complexity?
-// Complexity is typically expressed using Big O notation, which provides an upper bound on the growth rate of an algorithm's time or space requirements as the input size increases.
-// Real-world applications of complexity analysis include optimizing search algorithms, sorting algorithms, and data structures to improve performance in software development, database management, and various computational tasks.
+#include <iostream>
+#include <vector>
+
+long long sumValues(const std::vector<int>& values) {
+    long long sum = 0;
+    for (int value : values) {
+        sum += value;
+    }
+    return sum;
+}
+
+int main() {
+    const std::vector<int> values{1, 2, 3, 4, 5};
+    std::cout << "Sum: " << sumValues(values) << '\n'
+              << "sumValues runs in O(n) time and O(1) extra space.\n";
+    return 0;
+}

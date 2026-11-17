@@ -1,65 +1,47 @@
-//write a code for the dynamic memeory of the array in c++ using a class and int main
-// #include <iostream>
-// using namespace std;
-// int main(){
-    
-//     int size;
-//     cout << "Enter the size of the array: ";
-//     cin >> size;
-
-//     // Dynamically allocate memory for the array
-//     int* arr = new int[size];
-
-//     // Input elements into the array
-//     cout << "Enter " << size << " elements: ";
-//     for (int i = 0; i < size; i++) {
-//         cin >> arr[i];
-//     }
-
-//     // Display the elements of the array
-//     cout << "The elements in the array are: ";
-//     for (int i = 0; i < size; i++) {
-//         cout << arr[i] << " ";
-//     }
-//     cout << endl;
-
-//     // Deallocate the memory
-//     delete[] arr;
-
-//     return 0;
-// }
- 
-// #include <iostream>
-// using namespace std;
-// class DynamicArray {
-//     int n;
-//     public:
-//     DynamicArray(int count_){
-//         n = count_;
-//         ptr=new int[n];
-//         if(ptr==NULL){
-//             cout<<"Memory not allocated"<<endl;
-//             exit(0);
-//         }
-//         cout<<"Memory successfully allocated using new"<<endl;
-//     }
-//     void get_data(){
-//         cout<<"Enter the elements of the array: ";
-//         for(int i=0;i<n;i++){
-//             cin>>ptr[i];
-//         }
-//     }
-//     void display_data(){
-//         cout<<"The elements of the array are: ";
-//         for(int i=0;i<n;i++){
-//             cout<<ptr[i]<<" ";
-//         }
-//         cout<<endl;
-//     }
-// int main(){
-
-// }
-//dynamic memory allocation using class in c++
 #include <iostream>
-using namespace std;
+#include <memory>
 
+class DynamicArray {
+public:
+    explicit DynamicArray(int size)
+        : size_(size), values_(std::make_unique<int[]>(size)) {}
+
+    void read() {
+        std::cout << "Enter " << size_ << " elements: ";
+        for (int i = 0; i < size_; ++i) {
+            if (!(std::cin >> values_[i])) {
+                std::cerr << "Invalid element.\n";
+                return;
+            }
+        }
+    }
+
+    void display() const {
+        std::cout << "Array: ";
+        for (int i = 0; i < size_; ++i) {
+            std::cout << values_[i] << ' ';
+        }
+        std::cout << '\n';
+    }
+
+private:
+    int size_;
+    std::unique_ptr<int[]> values_;
+};
+
+int main() {
+    int size;
+    std::cout << "Enter the array size: ";
+    if (!(std::cin >> size) || size <= 0) {
+        std::cerr << "The size must be a positive integer.\n";
+        return 1;
+    }
+
+    DynamicArray values(size);
+    values.read();
+    if (!std::cin) {
+        return 1;
+    }
+    values.display();
+    return 0;
+}
