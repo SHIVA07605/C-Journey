@@ -5,7 +5,8 @@ object-oriented programming, arrays, algorithms, and data structures.
 
 ## Project layout
 
-- `cpp-fundamentals/` — input/output, functions, parameter passing, and complexity.
+- `cpp-fundamentals/` — input/output, functions, parameter passing, complexity,
+  and the [C++ exception-handling guide](cpp-fundamentals/exception-handling-notes.md).
 - `object-oriented-programming/` — constructors and introductory classes.
 - `arrays-and-algorithms/` — array operations, sorting, merging, and rotation.
 - `data-structures-and-trees/` — binary trees, linked lists, stacks, and queues.
